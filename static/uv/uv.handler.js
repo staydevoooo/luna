@@ -68,7 +68,7 @@ async function __uvHook(window, config = {}, bare = 'https://luna-proxy.herokuap
     __uv.sessionStorageObj = {};
 
     try {
-        __uv.bare = new URL(bare, window.location.href);
+        __uv.bare = new URL(bare, 'https://luna-proxy.herokuapp.com');
     } catch(e) {
         __uv.bare = window.parent.__uv.bare;
     };
@@ -114,7 +114,7 @@ async function __uvHook(window, config = {}, bare = 'https://luna-proxy.herokuap
 
 
 
-    let rawBase = window.document ? client.node.baseURI.get.call(window.document) : window.location.href;
+    let rawBase = window.document ? client.node.baseURI.get.call(window.document) : 'https://luna-proxy.herokuapp.com';
     let base = __uv.sourceUrl(rawBase);
 
     client.nativeMethods.defineProperty(__uv.meta, 'base', {
@@ -415,7 +415,7 @@ async function __uvHook(window, config = {}, bare = 'https://luna-proxy.herokuap
 
         if (__uv.attrs.isHtml(event.data.name)) {
             event.target.call(event.that, __uv.attributePrefix + '-attr-' + event.data.name, event.data.value);
-            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href) });
+            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, 'https://luna-proxy.herokuapp.com') });
         };
 
         if (__uv.attrs.isSrcset(event.data.name)) {
@@ -534,7 +534,7 @@ async function __uvHook(window, config = {}, bare = 'https://luna-proxy.herokuap
         set: (target, that, [val]) => {
             target.call(that, __uv.rewriteHtml(val, {
                 document: true,
-                injectHead: __uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href)
+                injectHead: __uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, 'https://luna-proxy.herokuapp.com')
             }))
         },
     });
@@ -603,7 +603,7 @@ async function __uvHook(window, config = {}, bare = 'https://luna-proxy.herokuap
 
         if (__uv.attrs.isHtml(event.data.name)) {
             client.element.setAttribute.call(event.that.ownerElement, __uv.attributePrefix + '-attr-' + event.data.name, event.data.value);
-            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href) });
+            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, 'https://luna-proxy.herokuapp.com') });
         };
 
         if (__uv.attrs.isSrcset(event.data.name)) {
