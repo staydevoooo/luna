@@ -1,6 +1,6 @@
 self.__uv$config = {
-    prefix: 'https://luna-proxy.herokuapp.com/service/',
-    bare: 'https://luna-proxy.herokuapp.com/bare/',
+    prefix: '/service/',
+    bare: '/bare/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
     handler: '/uv/uv.handler.js',

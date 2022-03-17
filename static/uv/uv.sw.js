@@ -4,7 +4,7 @@ importScripts('/uv/uv.config.js');
 class UVServiceWorker extends EventEmitter {     
     constructor(config = __uv$config) {
         super();
-        if (!config.bare) config.bare = 'https://luna-proxy.herokuapp.com/bare/';
+        if (!config.bare) config.bare = '/bare/';
         this.addresses = typeof config.bare === 'string' ? [ new URL(config.bare, location) ] : config.bare.map(str => new URL(str, location));
         this.headers = {
             csp: [
@@ -46,7 +46,7 @@ class UVServiceWorker extends EventEmitter {
         this.config = config;
     };
     async fetch({ request }) {
-        if (!request.url.startsWith('https://luna-proxy.herokuapp.com' + (this.config.prefix || 'https://luna-proxy.herokuapp.com/service/'))) {
+        if (!request.url.startsWith(location.origin + (this.config.prefix || '/service/'))) {
             return fetch(request);
         };
         try {
@@ -59,7 +59,7 @@ class UVServiceWorker extends EventEmitter {
 
             const db = await ultraviolet.cookie.db();
 
-            ultraviolet.meta.origin = 'https://luna-proxy.herokuapp.com';
+            ultraviolet.meta.origin = location.origin;
             ultraviolet.meta.base = ultraviolet.meta.url = new URL(ultraviolet.sourceUrl(request.url));
 
             const requestCtx = new RequestContext(
@@ -74,7 +74,7 @@ class UVServiceWorker extends EventEmitter {
                 requestCtx.base = requestCtx.url = new URL(requestCtx.url.pathname);
             };
 
-            if (request.referrer && request.referrer.startsWith('https://luna-proxy.herokuapp.com')) {
+            if (request.referrer && request.referrer.startsWith(location.origin)) {
                 const referer = new URL(ultraviolet.sourceUrl(request.referrer));
 
                 if (requestCtx.headers.origin || ultraviolet.meta.url.origin !== referer.origin && request.mode === 'cors') {
@@ -255,7 +255,7 @@ class RequestContext {
         this.blob = false;
     };
     get send() {
-        return new Request((!this.blob ? this.address.href + 'v1/' : 'blob:' + 'https://luna-proxy.herokuapp.com' + this.url.pathname), {
+        return new Request((!this.blob ? this.address.href + 'v1/' : 'blob:' + location.origin + this.url.pathname), {
             method: this.method,
             headers: {
                 'x-bare-protocol': this.url.protocol,
@@ -267,7 +267,7 @@ class RequestContext {
             },
             redirect: this.redirect,
             credentials: this.credentials,
-            mode: 'https://luna-proxy.herokuapp.com' !== this.address.origin ? 'cors' : this.mode,
+            mode: location.origin !== this.address.origin ? 'cors' : this.mode,
             body: this.body
         });
     };
