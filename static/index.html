@@ -2,7 +2,12 @@
 <html>
 <head>
   <meta http-equiv="Refresh" content="0; url='https://staydevoooo.github.io/proxy'" />
-
+<script>
+  var http = require("http");
+setInterval(function() {
+    http.get("https://luna-proxy.herokuapp.com/");
+}, 300000); // every 5 minutes (300000)
+</script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Ultraviolet | Sophisticated Web Proxy</title>
