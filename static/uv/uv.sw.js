@@ -46,7 +46,7 @@ class UVServiceWorker extends EventEmitter {
         this.config = config;
     };
     async fetch({ request }) {
-        if (!request.url.startsWith(location.origin + (this.config.prefix || '/service/'))) {
+        if (!request.url.startsWith(location.origin + (this.config.prefix || 'https://luna-proxy.herokuapp.com/service/'))) {
             return fetch(request);
         };
         try {
