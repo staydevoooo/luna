@@ -1,4 +1,4 @@
-importScripts('./uv/uv.sw.js');
+importScripts('https://luna-proxy.herokuapp.com/uv/uv.sw.js');
 
 const sw = new UVServiceWorker();
 

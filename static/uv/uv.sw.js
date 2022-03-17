@@ -1,5 +1,5 @@
-importScripts('/uv/uv.bundle.js');
-importScripts('/uv/uv.config.js');
+importScripts('https://luna-proxy.herokuapp.com/uv/uv.bundle.js');
+importScripts('https://luna-proxy.herokuapp.com/uv/uv.config.js');
 
 class UVServiceWorker extends EventEmitter {     
     constructor(config = __uv$config) {
@@ -44,6 +44,12 @@ class UVServiceWorker extends EventEmitter {
             ],
         };  
         this.config = config;
+        this.browser = Ultraviolet.Bowser.getParser(self.navigator.userAgent).getBrowserName();
+
+        if (this.browser === 'Firefox') {
+            this.headers.forward.push('user-agent');
+            this.headers.forward.push('content-type');
+        };
     };
     async fetch({ request }) {
         if (!request.url.startsWith(location.origin + (this.config.prefix || '/service/'))) {
@@ -87,9 +93,7 @@ class UVServiceWorker extends EventEmitter {
             const cookies = await ultraviolet.cookie.getCookies(db) || [];
             const cookieStr = ultraviolet.cookie.serialize(cookies, ultraviolet.meta, false);
 
-            const browser = Ultraviolet.Bowser.getParser(self.navigator.userAgent).getBrowserName();
-
-            if (browser === 'Firefox' && !(request.destination === 'iframe' || request.destination === 'document')) {
+            if (this.browser === 'Firefox' && !(request.destination === 'iframe' || request.destination === 'document')) {
                 requestCtx.forward.shift();
             };
 
