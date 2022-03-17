@@ -2,7 +2,7 @@ if (!self.__uv) {
     __uvHook(self, self.__uv$config, self.__uv$config.bare);
 };
 
-async function __uvHook(window, config = {}, bare = '/bare/') {
+async function __uvHook(window, config = {}, bare = 'https://luna-proxy.herokuapp.com/bare/') {
     if ('__uv' in window && window.__uv instanceof Ultraviolet) return false;
 
     if (window.document && !!window.window) {
@@ -46,7 +46,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
     });
 
 
-    __uv.meta.origin = location.origin;
+    __uv.meta.origin = 'https://luna-proxy.herokuapp.com';
     __uv.location = client.location.emulate(
         (href) => {
             if (href === 'about:srcdoc') return new URL(href);
@@ -68,7 +68,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
     __uv.sessionStorageObj = {};
 
     try {
-        __uv.bare = new URL(bare, window.location.href);
+        __uv.bare = new URL(bare, 'https://luna-proxy.herokuapp.com');
     } catch(e) {
         __uv.bare = window.parent.__uv.bare;
     };
@@ -94,8 +94,8 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
     if (window.localStorage) {
         for (const key in window.localStorage) {
-            if (key.startsWith(methodPrefix + __uv.location.origin + '@')) {
-                __uv.localStorageObj[key.slice((methodPrefix + __uv.location.origin + '@').length)] = window.localStorage.getItem(key);
+            if (key.startsWith(methodPrefix + __uv.'https://luna-proxy.herokuapp.com' + '@')) {
+                __uv.localStorageObj[key.slice((methodPrefix + __uv.'https://luna-proxy.herokuapp.com' + '@').length)] = window.localStorage.getItem(key);
             };
         };
 
@@ -104,8 +104,8 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
     if (window.sessionStorage) {
         for (const key in window.sessionStorage) {
-            if (key.startsWith(methodPrefix + __uv.location.origin + '@')) {
-                __uv.sessionStorageObj[key.slice((methodPrefix + __uv.location.origin + '@').length)] = window.sessionStorage.getItem(key);
+            if (key.startsWith(methodPrefix + __uv.'https://luna-proxy.herokuapp.com' + '@')) {
+                __uv.sessionStorageObj[key.slice((methodPrefix + __uv.'https://luna-proxy.herokuapp.com' + '@').length)] = window.sessionStorage.getItem(key);
             };
         };
 
@@ -114,7 +114,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
 
 
-    let rawBase = window.document ? client.node.baseURI.get.call(window.document) : window.location.href;
+    let rawBase = window.document ? client.node.baseURI.get.call(window.document) : 'https://luna-proxy.herokuapp.com';
     let base = __uv.sourceUrl(rawBase);
 
     client.nativeMethods.defineProperty(__uv.meta, 'base', {
@@ -360,7 +360,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
         event.data.origin = '*';
         event.data.message = {
             __data: event.data.message,
-            __origin: (event.that || event.target).__uv$source.location.origin,
+            __origin: (event.that || event.target).__uv$source.'https://luna-proxy.herokuapp.com",
             __to: to,
         };
 
@@ -388,12 +388,12 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
     client.overrideDescriptor(window, 'origin', {
         get: (target, that) => {
-            return __uv.location.origin;
+            return __uv.'https://luna-proxy.herokuapp.com';
         },
     });
 
     client.node.on('baseURI', event => {
-        if (event.data.value.startsWith(window.location.origin)) event.data.value = __uv.sourceUrl(event.data.value);
+        if (event.data.value.startsWith(window.'https://luna-proxy.herokuapp.com')) event.data.value = __uv.sourceUrl(event.data.value);
     });
 
     client.element.on('setAttribute', event => {
@@ -415,7 +415,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
         if (__uv.attrs.isHtml(event.data.name)) {
             event.target.call(event.that, __uv.attributePrefix + '-attr-' + event.data.name, event.data.value);
-            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href) });
+            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, 'https://luna-proxy.herokuapp.com') });
         };
 
         if (__uv.attrs.isSrcset(event.data.name)) {
@@ -534,7 +534,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
         set: (target, that, [val]) => {
             target.call(that, __uv.rewriteHtml(val, {
                 document: true,
-                injectHead: __uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href)
+                injectHead: __uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, 'https://luna-proxy.herokuapp.com')
             }))
         },
     });
@@ -603,7 +603,7 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
 
         if (__uv.attrs.isHtml(event.data.name)) {
             client.element.setAttribute.call(event.that.ownerElement, __uv.attributePrefix + '-attr-' + event.data.name, event.data.value);
-            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, window.location.href) });
+            event.data.value = __uv.rewriteHtml(event.data.value, {...__uv.meta, document: true, injectHead:__uv.createHtmlInject(__uv.handlerScript, __uv.bundleScript, __uv.configScript, __uv.cookieStr, 'https://luna-proxy.herokuapp.com') });
         };
 
         if (__uv.attrs.isSrcset(event.data.name)) {
@@ -616,8 +616,8 @@ async function __uvHook(window, config = {}, bare = '/bare/') {
     // URL
     client.url.on('createObjectURL', event => {
         let url = event.target.call(event.that, event.data.object);
-        if (url.startsWith('blob:' + location.origin)) {
-            let newUrl = 'blob:' + (__uv.meta.url.href !== 'about:blank' ?  __uv.meta.url.origin : window.parent.__uv.meta.url.origin) + url.slice('blob:'.length + location.origin.length);
+        if (url.startsWith('blob:' + 'https://luna-proxy.herokuapp.com')) {
+            let newUrl = 'blob:' + (__uv.meta.url.href !== 'about:blank' ?  __uv.meta.url.origin : window.parent.__uv.meta.url.origin) + url.slice('blob:'.length + 'https://luna-proxy.herokuapp.com'.length);
             __uv.blobUrls.set(newUrl, url);
             event.respondWith(newUrl);
         } else {

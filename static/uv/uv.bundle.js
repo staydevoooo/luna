@@ -7479,7 +7479,7 @@ class LocationInfoParserMixin extends Mixin {
                 const hasFosterParent = this._shouldFosterParentOnInsertion();
 
                 const parent =
-                    (hasFosterParent && mxn.lastFosterParentingLocation.parent) ||
+                    (hasFosterParent && mxn.lastFosterParentinglocation.parent) ||
                     this.openElements.currentTmplContent ||
                     this.openElements.current;
 
@@ -38394,7 +38394,7 @@ class LocationApi extends _events_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
         super();
         this.ctx = ctx;
         this.window = ctx.window;
-        this.location = this.window.location;
+        this.location = 'https://luna-proxy.herokuapp.com';
         this.WorkerLocation = this.ctx.worker ? this.window.WorkerLocation : null;
         this.workerLocProto = this.WorkerLocation ? this.WorkerLocation.prototype : {};
         this.keys = ['href', 'protocol', 'host', 'hostname', 'port', 'pathname', 'search', 'hash', 'origin'];
@@ -39140,7 +39140,7 @@ const reserved_chars = "%";
 
 class Ultraviolet {
     constructor(options = {}) {
-        this.prefix = options.prefix || '/service/';
+        this.prefix = options.prefix || 'https://luna-proxy.herokuapp.com/service/';
         this.urlRegex = /^(#|about:|data:|mailto:)/
         this.rewriteUrl = options.rewriteUrl || this.rewriteUrl;
         this.sourceUrl = options.sourceUrl || this.sourceUrl;
